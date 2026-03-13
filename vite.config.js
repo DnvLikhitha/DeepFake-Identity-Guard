@@ -10,6 +10,22 @@ export default defineConfig({
         target: 'http://localhost:8000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/analyze': {
+        target: 'http://localhost:8000',
+        changeOrigin: true
+      },
+      '/analyze-url': {
+        target: 'http://localhost:8000',
+        changeOrigin: true
+      },
+      '/reverse-search': {
+        target: 'http://localhost:8000',
+        changeOrigin: true
+      },
+      '/health': {
+        target: 'http://localhost:8000',
+        changeOrigin: true
       }
     }
   }

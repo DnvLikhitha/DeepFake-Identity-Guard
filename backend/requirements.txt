@@ -1,0 +1,10 @@
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+pillow==11.0.0
+python-multipart==0.0.17
+httpx==0.28.0
+python-dotenv==1.0.1
+transformers>=4.40.0
+torch>=2.0.0
+torchvision>=0.15.0
+timm>=1.0.0

@@ -4,7 +4,7 @@ DeepFake Identity Guard — FastAPI Backend Server
 Provides:
 - POST /analyze         — Upload image for deepfake/manipulation detection
 - POST /analyze-url     — Analyze image from URL (Supabase signed URLs)
-- POST /reverse-search  — Reverse image search via Google CSE / Bing
+- POST /reverse-search  — Reverse image search via SerpAPI (Google Reverse Image)
 - GET  /health          — Health check w/ ML model status
 """
 
@@ -105,8 +105,7 @@ async def health():
         ml_status = "module not installed"
 
     # Check reverse search API availability
-    google_available = bool(os.getenv("GOOGLE_CSE_API_KEY")) and bool(os.getenv("GOOGLE_CSE_CX"))
-    bing_available = bool(os.getenv("BING_VISUAL_SEARCH_API_KEY"))
+    serpapi_available = bool(os.getenv("SERPAPI_API_KEY"))
 
     return {
         "status": "ok",
@@ -114,8 +113,7 @@ async def health():
         "version": "2.0.0",
         "ml_model": ml_status,
         "reverse_search": {
-            "google_cse": google_available,
-            "bing_visual": bing_available,
+            "serpapi": serpapi_available,
         },
     }
 
@@ -193,7 +191,7 @@ async def analyze_url(request: AnalyzeUrlRequest):
 async def reverse_search_endpoint(request: ReverseSearchRequest):
     """
     Perform reverse image search to find where an image appears online.
-    Uses Google Custom Search (primary) or Bing Visual Search (fallback).
+    Uses SerpAPI (Google Reverse Image engine).
     """
     try:
         from reverse_search import reverse_image_search
